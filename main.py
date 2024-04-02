@@ -62,7 +62,7 @@ def Item_Changer(confirmed_item, requested_item):
     
 
 def Create_New():
-    new_item = []
+    '''new_item = []
     
     label = input("Please label your item: ")
     quantity = int(input("Please specify the quantity: "))
@@ -89,7 +89,6 @@ def Create_New():
         storage.read()
         
     return True
-    '''
         
     return True
 
