@@ -1,0 +1,5 @@
+Manual:
+Create #Create is a command to create new label for storage
+Edit - CL #
+Edit - CQ #
+Delete
