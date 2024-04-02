@@ -117,8 +117,6 @@ def Edit_Change_Label():
     return 1
     
     
-    
-
 def Edit_Change_Quantity():
     return True
 
