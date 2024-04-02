@@ -74,6 +74,22 @@ def Create_New():
     
     with open("Storage.txt", "a") as Storage:
         Storage.write(new_item_finalized)
+
+'''
+    label = input()
+    quantity = int(input())
+
+    quantity = str(quantity)
+
+    with open("storage.txt", "w") as storage:
+        storage.write(label)
+        storage.write(quantity)
+        
+    with open("storage.txt", "r") as storage:
+        storage.read()
+        
+    return True
+    '''
         
     return True
 
