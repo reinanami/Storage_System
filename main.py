@@ -76,8 +76,8 @@ def Create_New():
         Storage.write(new_item_finalized)
 
 '''
-    label = input()
-    quantity = int(input())
+    label = input("Please label your item: ")
+    quantity = int(input("Please specify your item: "))
 
     quantity = str(quantity)
 
