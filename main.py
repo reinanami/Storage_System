@@ -9,38 +9,16 @@ def Loading_storage():
         storage.append({'name':parts[0], 'quantity':parts[1]})
     return storage
 
-def Item_detector(selected_item, storage):
+def Item_detector(selected_item, item_length, storage):
     for item in storage:
         if item['name'] == selected_item:
-            return item
+            if item['quantity'] == item_length:
+                return item
         return None
 
             
 def Item_Changer(confirmed_item, requested_item):
-    
-    new_storage = []
-        
-    item_name = ""
-    quantity = ""
-    
-    for i in storage:
-        if i.isalpha() == True:
-            item_name += i
-        if i == " ":
-            item_name = i
-        if i.isdigit() == True:
-            new_storage.append()
-            item_name = ""
-        if item_name == confirmed_item:
-            item_name = requested_item
-            if i.isdigit() == True:
-                quantity = i
-            
-        new_storage.append(item_name)
-        new_storage.append(quantity)
-            
-    with open("Storage.txt", "w") as Storage:
-        Storage.write(new_storage)
+    return True
     
 
 def Create_New():
@@ -70,7 +48,7 @@ def Edit_Change_Label():
     item_length = len(selected_item)
     
     storage = Loading_storage()
-    confirmed_item = Item_Detector(selected_item, storage)
+    confirmed_item = Item_Detector(selected_item, item_length, storage)
    
     if selected_item !=  confirmed_item:
         print("Item not found. Please check your spellings or capitalization.")
