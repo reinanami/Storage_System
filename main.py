@@ -1,38 +1,20 @@
-def Item_Detector(selected_item, selected_item_length):
-    with open("Storage.txt", "r") as Storage:
-        storage = Storage.read()
-    item_length = 0
-    item_name = ""
-    confirmed_item = ""
-    confirmed_item_length = 0
-    for i in storage:
-        if i.isalpha()  == True:
-            item_name += i
-            item_length += 1
-        if i == " ":
-            item_name += i
-        if i.isdigit() == True:
-            confirmed_item_length = item_length
-            confirmed_item = item_name
-            item_name = ""
-            item_length = 0
-            if selected_item == confirmed_item:
-                if selected_item_length == confirmed_item_length:
-                    return confirmed_item
-        else:
-            '''print("Iteration:", i)
-            print("Item length:", item_length)
-            print("Item name:" , item_name)'''
-            
-            print("Selected length:", selected_item_length)
-            print("Confirmed Item Length:", confirmed_item_length)
-            print("Selected Item:", selected_item)
-            print("Confirmed item:", confirmed_item)
-            if selected_item == confirmed_item:
-                print(True)
-            else:
-                print(False)
-            print(" ")
+def Loading_storage():
+   with open("Storage.txt", "r") as Storage:
+    lines = Storage.readlines()
+   storage =  []
+
+   for l in lines:
+    parts = line.strip().split(maxsplit = 1)
+    if len(parts) == 2:
+        storage.append({'name':parts[0], 'quantity':parts[1]})
+    return storage
+
+def Item_detector(selected_item, storage):
+    for item in storage:
+        if item['name'] == selected_item:
+            return item
+        return None
+
             
 def Item_Changer(confirmed_item, requested_item):
     
@@ -62,7 +44,7 @@ def Item_Changer(confirmed_item, requested_item):
     
 
 def Create_New():
-    '''new_item = []
+    new_item = []
     
     label = input("Please label your item: ")
     quantity = int(input("Please specify the quantity: "))
@@ -74,21 +56,6 @@ def Create_New():
     
     with open("Storage.txt", "a") as Storage:
         Storage.write(new_item_finalized)
-
-'''
-    label = input("Please label your item: ")
-    quantity = int(input("Please specify your item: "))
-
-    quantity = str(quantity)
-
-    with open("storage.txt", "w") as storage:
-        storage.write(label)
-        storage.write(quantity)
-        
-    with open("storage.txt", "r") as storage:
-        storage.read()
-        
-    return True
         
     return True
 
@@ -102,7 +69,8 @@ def Edit_Change_Label():
     selected_item = input("Please select an item: ")
     item_length = len(selected_item)
     
-    confirmed_item = Item_Detector(selected_item, item_length)
+    storage = Loading_storage()
+    confirmed_item = Item_Detector(selected_item, storage)
    
     if selected_item !=  confirmed_item:
         print("Item not found. Please check your spellings or capitalization.")
