@@ -50,6 +50,7 @@ def Item_Changer(confirmed_item, requested_item):
     quantity = 0
     selected_quantity = 0
     space = "&"
+    write_to_storage = ""
     
     for i in storage:
         if i.isalpha()  == True:
@@ -65,12 +66,12 @@ def Item_Changer(confirmed_item, requested_item):
             quantity = 0
             if selected_item_name == confirmed_item:
               write_to_storage = (requested_item + space + selected_quantity + space)
-              with open("Storage.txt", "a") as Storage:
-                Storage.write(write_to_storage)
             else:
               write_to_storage = (selected_item_name + space + selected_quantity + space)
-              with open("Storage.txt", "a") as Storage:
-                Storage.write(write_to_storage)
+        if write_to_storage != "":
+          with open("Storage.txt", "w") as Storage:
+            Storage.write(write_to_storage)
+      
     return True
     
 def Create_New():
@@ -81,7 +82,7 @@ def Create_New():
     space = ("&")
     new_item = (label + space + quantity + space)
     
-    with open("Storage.txt", "a") as Storage:
+    with open("Storage.txt", "w") as Storage:
         Storage.write(new_item)
         
     return True
