@@ -42,6 +42,35 @@ def View_Storage():
   
             
 def Item_Changer(confirmed_item, requested_item):
+    with open("Storage.txt", "r") as Storage:
+      storage = Storage.read()
+
+    item_name = ""
+    selected_item_name = ""
+    quantity = 0
+    selected_quantity = 0
+    space = "&"
+    
+    for i in storage:
+        if i.isalpha()  == True:
+            item_name += i
+        if i == " ":
+            item_name += i
+        if i.isdigit == True:
+          quantity = i
+        if i == "&":
+            selected_item_name = item_name
+            selected_quantity = str(quantity)
+            item_name = ""
+            quantity = 0
+            if selected_item_name == confirmed_item:
+              write_to_storage = (requested_item + space + selected_quantity + space)
+              with open("Storage.txt", "a") as Storage:
+                Storage.write(write_to_storage)
+            else:
+              write_to_storage = (selected_item_name + space + selected_quantity + space)
+              with open("Storage.txt", "a") as Storage:
+                Storage.write(write_to_storage)
     return True
     
 def Create_New():
