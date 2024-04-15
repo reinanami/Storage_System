@@ -21,6 +21,7 @@ def Item_Detector(selected_item, selected_item_length):
             if selected_item == confirmed_item:
                 if selected_item_length == confirmed_item_length:
                     return confirmed_item
+
 def View_Storage():
   with open("Storage.txt", "r") as Storage:
     storage = Storage.read()
@@ -39,8 +40,7 @@ def View_Storage():
   print(item_list)
   
   return item_list
-  
-            
+     
 def Item_Changer(confirmed_item, requested_item):
     with open("Storage.txt", "r") as Storage:
       storage = Storage.read()
