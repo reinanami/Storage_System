@@ -72,10 +72,17 @@ def Create_New():
     space = ("&")
     new_item = (label + space + quantity + space)
     
-    with open("Storage.txt", "a") as Storage:
+    selected_item_length = len(label)
+    
+    check_for_existing_item = Item_Detector(label, selected_item_length)
+    
+    if check_for_existing_item == label:
+      print("You already have an item named " + label)
+      return False
+    else:
+      with open("Storage.txt", "a") as Storage:
         Storage.write(new_item)
-        
-    return True
+      return True
 
 def Edit_Change_Label():
     
@@ -106,10 +113,33 @@ def Edit_Change_Quantity():
     return True
 
 def Delete():
-    return True
+  
+    with open("Storage.txt", "r") as Storage:
+        storage = Storage.read()
+    print("You have: ")
+    
+    View_Storage()
+    
+    selected_item = input("Please select an item: ")
+    selected_item_length = len(selected_item)
+    
+    confirmed_item = Item_Detector(selected_item, selected_item_length)
+   
+    if selected_item !=  confirmed_item:
+        print("Item not found. Please check your spellings or capitalization.")
+        return 0
+    
+    print("Found the item: " + confirmed_item)
+   
+    print("Are you sure that you want to delete: " + confirmed_item + "?")
+    
+    return 1
     
 def Restart_Storage():
-    return True
+  clear = ""
+  with open("Storage.txt", "w") as Storage:
+      Storage.write(clear)
+  return True
 
 #main
 print("Welcome to the Storage System!")
@@ -124,7 +154,7 @@ while True:
         if boolean == True:
             print("Wrote item successfully!")
         else:
-            print("Error! Something went wrong with the system.")
+            print("Error! Something went wrong with the system. Please try again.")
         response = 1
     elif response == "Edit -CL":
         boolean = Edit_Change_Label()
