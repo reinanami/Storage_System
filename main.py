@@ -58,6 +58,8 @@ def Item_Changer(confirmed_item, requested_item):
               write_to_storage = (requested_item + space + quantity + space)
             else:
               write_to_storage = (item_name + space + quantity + space)
+              item_name = ""
+              quantity = ""
               
     with open("Storage.txt", "w") as Storage:
       Storage.write(write_to_storage)
