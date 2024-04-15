@@ -44,7 +44,7 @@ def Item_Changer(confirmed_item, requested_item):
       storage = Storage.read()
 
     item_name = ""
-    quantity = 0
+    quantity = ""
     write_to_storage = ""
     space = "&"
     
@@ -55,9 +55,9 @@ def Item_Changer(confirmed_item, requested_item):
           quantity += i
         elif i == space:
             if item_name.strip() == confirmed_item:
-              write_to_storage = (requested_item + space + selected_quantity + space)
+              write_to_storage = (requested_item + space + quantity + space)
             else:
-              write_to_storage = (item_name + space + selected_quantity + space)
+              write_to_storage = (item_name + space + quantity + space)
               
     with open("Storage.txt", "w") as Storage:
       Storage.write(write_to_storage)
@@ -104,7 +104,9 @@ def Edit_Change_Label():
     print("Found the item: " + confirmed_item)
    
     print("What would you like to re-label " + confirmed_item + " to?")
-    changed_label = input("New label: ")
+    requested_item = input("New label: ")
+    
+    Item_Changer(confirmed_item, requested_item)
     
     return 1
     
