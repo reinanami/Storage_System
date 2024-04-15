@@ -8,11 +8,9 @@ def Item_Detector(selected_item, selected_item_length):
     confirmed_item_length = 0
     
     for i in storage:
-        if i.isalpha()  == True:
+        if i.isalpha() or i == " ":
             item_name += i
             item_length += 1
-        if i == " ":
-            item_name += i
         if i == "&":
             confirmed_item_length = item_length
             confirmed_item = item_name
@@ -46,31 +44,23 @@ def Item_Changer(confirmed_item, requested_item):
       storage = Storage.read()
 
     item_name = ""
-    selected_item_name = ""
     quantity = 0
-    selected_quantity = 0
-    space = "&"
     write_to_storage = ""
+    space = "&"
     
     for i in storage:
-        if i.isalpha()  == True:
+        if i.isalpha()  or i == " ":
             item_name += i
-        if i == " ":
-            item_name += i
-        if i.isdigit == True:
-          quantity = i
-        if i == "&":
-            selected_item_name = item_name
-            selected_quantity = str(quantity)
-            item_name = ""
-            quantity = 0
-            if selected_item_name == confirmed_item:
+        if i.isdigit():
+          quantity += i
+        elif i == space:
+            if item_name.strip() == confirmed_item:
               write_to_storage = (requested_item + space + selected_quantity + space)
             else:
-              write_to_storage = (selected_item_name + space + selected_quantity + space)
-        if write_to_storage != "":
-          with open("Storage.txt", "w") as Storage:
-            Storage.write(write_to_storage)
+              write_to_storage = (item_name + space + selected_quantity + space)
+              
+    with open("Storage.txt", "w") as Storage:
+      Storage.write(write_to_storage)
       
     return True
     
@@ -82,7 +72,7 @@ def Create_New():
     space = ("&")
     new_item = (label + space + quantity + space)
     
-    with open("Storage.txt", "w") as Storage:
+    with open("Storage.txt", "a") as Storage:
         Storage.write(new_item)
         
     return True
