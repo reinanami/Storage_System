@@ -75,6 +75,11 @@ def Edit_Change_Label():
     print("What would you like to re-label " + confirmed_item + " to?")
     requested_item = input("New label: ")
     
+    requested_item_length = len(requested_item)
+    check_for_existing_item = Item_Detector(requested_item, requested_item_length)
+    if check_for_existing_item == requested_item:
+      print("You already have an item named " + requested_item)
+    
     with open("Storage.txt", "r") as Storage:
        storage = Storage.read()
 
