@@ -20,6 +20,12 @@ def Item_Detector(selected_item, selected_item_length):
                 if selected_item_length == confirmed_item_length:
                     return confirmed_item
 
+def Check_Alpha(label):
+    for i in label:
+        if i.isalpha() == False:
+            print("Your label may not contain symbols or numbers.")
+            return 2
+
 def View_Storage():
   with open("Storage.txt", "r") as Storage:
     storage = Storage.read()
@@ -37,6 +43,9 @@ def View_Storage():
 def Create_New():
   
     label = input("Please label your item: ")
+    check = Check_Alpha(label)
+    if check == 2:
+        return False
     quantity = int(input("Please specify the quantity: "))
     quantity = str(quantity)
     space = "&"
@@ -74,11 +83,18 @@ def Edit_Change_Label():
    
     print("What would you like to re-label " + confirmed_item + " to?")
     requested_item = input("New label: ")
-    
+
+    check = Check_Alpha(requested_item)
+    if check == 2:
+        return False
+
     requested_item_length = len(requested_item)
     check_for_existing_item = Item_Detector(requested_item, requested_item_length)
     if check_for_existing_item == requested_item:
       print("You already have an item named " + requested_item)
+      return 0
+    else:
+        print("Changing label...")
     
     with open("Storage.txt", "r") as Storage:
        storage = Storage.read()
@@ -180,7 +196,7 @@ def Restart_Storage():
   response = input("Are you sure you want to restart the storage system? (y/n)")
   if response != "y":
       print("The system was not restarted.")
-  pernament_response = input("Type 'agree' to confirm restarting the storage system. This action cannot be undone.")
+  pernament_response = input("Type 'agree' to confirm restarting the storage system. This action cannot be undone:")
   if pernament_response != "agree":
       print("Cancelled restarting.")
   print("Restarting the system...")
