@@ -95,7 +95,41 @@ def Edit_Change_Label():
     
     
 def Edit_Change_Quantity():
-    return True
+    print("You have: ")
+    
+    View_Storage()
+    
+    selected_item = input("Please select an item: ")
+    selected_item_length = len(selected_item)
+    
+    confirmed_item = Item_Detector(selected_item, selected_item_length)
+   
+    if selected_item !=  confirmed_item:
+        print("Item not found. Please check your spellings or capitalization.")
+        return 0
+    
+    print("Found the item: " + confirmed_item)
+   
+    print("What would you like to re-label " + confirmed_item + "'s quantity to?")
+    new_quantity = input("New label: ")
+    
+    with open("Storage.txt", "r") as Storage:
+       storage = Storage.read()
+
+    items = storage.split('#')[:-1]
+    updated_storage = ""
+    
+    for i in items:
+        name, quantity = i.split('&')
+        if name == confirmed_item:
+            updated_storage += name + '&' + new_quantity + '#'
+        else:
+            updated_storage += name + '&' + quantity + '#'
+              
+    with open("Storage.txt", "w") as Storage:
+      Storage.write(updated_storage)
+    
+    return 1
 
 def Delete():
 
@@ -146,9 +180,9 @@ def Restart_Storage():
 #main
 print("Welcome to the Storage System!")
 while True:
-    print("Type --H for help.")
+    print("\nType 'Instruction' for the instruction.")
     response = input("Command: ")
-    if response == "--H":
+    if response == "Instruction":
         manual = open("manual.txt")
         print(manual.read())
     elif response == "Create":
@@ -164,9 +198,19 @@ while True:
             print("Changed item label successfully.")
         else:
             print("There was an error in changing the label. Please try again.")
+    elif response == "Edit -Q":
+        boolean = Edit_Change_Quantity()
+        if boolean == True:
+            print("Changed item quantity successfully.")
+        else:
+            print("There was an error in changing the quantity. Please try again.")
     elif response == "Edit -DELETE":
         response = Delete()
     elif response == "Restart":
        Restart_Storage()
+       print("Restarted Storage")
+    elif response == "View":
+        View_Storage()
+        response == 1
     elif response == 1:
         print("\n")
