@@ -33,25 +33,6 @@ def View_Storage():
   print(item_list)
   
   return item_list
-     
-def Item_Changer(confirmed_item, requested_item):
-    with open("Storage.txt", "r") as Storage:
-       storage = Storage.read()
-
-    items = storage.split('#')[:-1]
-    updated_storage = ""
-    
-    for i in items:
-        name, quantity = i.split('&')
-        if name == confirmed_item:
-            updated_storage += requested_item + '&' + quantity + '#'
-        else:
-            updated_storage += name + '&' + quantity + '#'
-              
-    with open("Storage.txt", "w") as Storage:
-      Storage.write(updated_storage)
-      
-    return True
 
 def Create_New():
   
@@ -94,7 +75,21 @@ def Edit_Change_Label():
     print("What would you like to re-label " + confirmed_item + " to?")
     requested_item = input("New label: ")
     
-    Item_Changer(confirmed_item, requested_item)
+    with open("Storage.txt", "r") as Storage:
+       storage = Storage.read()
+
+    items = storage.split('#')[:-1]
+    updated_storage = ""
+    
+    for i in items:
+        name, quantity = i.split('&')
+        if name == confirmed_item:
+            updated_storage += requested_item + '&' + quantity + '#'
+        else:
+            updated_storage += name + '&' + quantity + '#'
+              
+    with open("Storage.txt", "w") as Storage:
+      Storage.write(updated_storage)
     
     return 1
     
