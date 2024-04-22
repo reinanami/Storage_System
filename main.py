@@ -31,7 +31,6 @@ def View_Storage():
       if i == "&":
         item_list.append(item_name)
         item_name = ""
-        item_length = 0
       else:
         item_name += i
             
@@ -41,7 +40,7 @@ def View_Storage():
      
 def Item_Changer(confirmed_item, requested_item):
     with open("Storage.txt", "r") as Storage:
-      storage = Storage.read()
+       storage = Storage.read()
 
     item_name = ""
     quantity = ""
@@ -51,21 +50,21 @@ def Item_Changer(confirmed_item, requested_item):
     for i in storage:
         if i.isalpha()  or i == " ":
             item_name += i
-        if i.isdigit():
+        elif i.isdigit():
           quantity += i
         elif i == space:
             if item_name.strip() == confirmed_item:
-              write_to_storage = (requested_item + space + quantity + space)
+              write_to_storage += (requested_item + space + quantity + space)
             else:
-              write_to_storage = (item_name + space + quantity + space)
-              item_name = ""
-              quantity = ""
+              write_to_storage += (item_name + space + quantity + space)
+            item_name = ""
+            quantity = ""
               
     with open("Storage.txt", "w") as Storage:
       Storage.write(write_to_storage)
       
     return True
-    
+
 def Create_New():
   
     label = input("Please label your item: ")
@@ -166,6 +165,8 @@ while True:
             print("Changed item label successfully.")
         else:
             print("There was an error in changing the label. Please try again.")
+    elif response == "Restart":
+       Restart_Storage()
     elif response == 1:
         print()
     else:
