@@ -172,7 +172,15 @@ def Delete():
     return 1
     
 def Restart_Storage():
+  response = input("Are you sure you want to restart the storage system? (y/n)")
+  if response != "y":
+      print("The system was not restarted.")
+  pernament_response = input("Type 'agree' to confirm restarting the storage system. This action cannot be undone.")
+  if pernament_response != "agree":
+      print("Cancelled restarting.")
+  print("Restarting the system...")
   clear = ""
+  
   with open("Storage.txt", "w") as Storage:
       Storage.write(clear)
   return True
@@ -180,7 +188,7 @@ def Restart_Storage():
 #main
 print("Welcome to the Storage System!")
 while True:
-    print("\nType 'Instruction' for the instruction.")
+    print("\nType 'Instruction' for the manual.")
     response = input("Command: ")
     if response == "Instruction":
         manual = open("manual.txt")
@@ -198,7 +206,7 @@ while True:
             print("Changed item label successfully.")
         else:
             print("There was an error in changing the label. Please try again.")
-    elif response == "Edit -Q":
+    elif response == "Edit -CQ":
         boolean = Edit_Change_Quantity()
         if boolean == True:
             print("Changed item quantity successfully.")

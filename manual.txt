@@ -1,5 +1,7 @@
 Manual:
 Create #Create is a command to create new label for storage
-Edit - CL #
-Edit - CQ #
-Delete
+Edit - CL #Edit Change Label changes the label
+Edit - CQ #Edit Change Quantity changes the quantity of desired label
+Edit -DELETE #Edit Delete deletes an item and its quantity from the system
+View #View storage
+Restart #Restarts the Storage system. This cannot be undone
