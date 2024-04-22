@@ -23,17 +23,13 @@ def Item_Detector(selected_item, selected_item_length):
 def View_Storage():
   with open("Storage.txt", "r") as Storage:
     storage = Storage.read()
-    
-    item_name = ""
+
+    items = storage.split('#')[:-1]
     item_list = []
-    
-    for i in storage:
-      if i == "&":
-        item_list.append(item_name)
-        item_name = ""
-      else:
-        item_name += i
-            
+
+    for item in items:
+       name, quantity = item.split('&')
+       item_list.append(name + " " + quantity)            
   print(item_list)
   
   return item_list
@@ -42,26 +38,18 @@ def Item_Changer(confirmed_item, requested_item):
     with open("Storage.txt", "r") as Storage:
        storage = Storage.read()
 
-    item_name = ""
-    quantity = ""
-    write_to_storage = ""
-    space = "&"
+    items = storage.split('#')[:-1]
+    updated_storage = ""
     
-    for i in storage:
-        if i.isalpha()  or i == " ":
-            item_name += i
-        elif i.isdigit():
-          quantity += i
-        elif i == space:
-            if item_name.strip() == confirmed_item:
-              write_to_storage += (requested_item + space + quantity + space)
-            else:
-              write_to_storage += (item_name + space + quantity + space)
-            item_name = ""
-            quantity = ""
+    for i in items:
+        name, quantity = i.split('&')
+        if name == confirmed_item:
+            updated_storage += requested_item + '&' + quantity + '#'
+        else:
+            updated_storage += name + '&' + quantity + '#'
               
     with open("Storage.txt", "w") as Storage:
-      Storage.write(write_to_storage)
+      Storage.write(updated_storage)
       
     return True
 
@@ -70,8 +58,9 @@ def Create_New():
     label = input("Please label your item: ")
     quantity = int(input("Please specify the quantity: "))
     quantity = str(quantity)
-    space = ("&")
-    new_item = (label + space + quantity + space)
+    space = "&"
+    tag = "#"
+    new_item = (label + space + quantity + tag)
     
     selected_item_length = len(label)
     
@@ -86,9 +75,7 @@ def Create_New():
       return True
 
 def Edit_Change_Label():
-    
-    with open("Storage.txt", "r") as Storage:
-        storage = Storage.read()
+
     print("You have: ")
     
     View_Storage()
@@ -116,25 +103,42 @@ def Edit_Change_Quantity():
     return True
 
 def Delete():
-  
-    with open("Storage.txt", "r") as Storage:
-        storage = Storage.read()
+
     print("You have: ")
     
     View_Storage()
     
     selected_item = input("Please select an item: ")
     selected_item_length = len(selected_item)
-    
     confirmed_item = Item_Detector(selected_item, selected_item_length)
    
     if selected_item !=  confirmed_item:
         print("Item not found. Please check your spellings or capitalization.")
-        return 0
+        return 1
     
     print("Found the item: " + confirmed_item)
    
-    print("Are you sure that you want to delete: " + confirmed_item + "?")
+    print("Are you sure that you want to delete: " + confirmed_item + "? (y/n)")
+    response = input()
+    if response != "y":
+        print("Request cancelled.")
+        return 1
+    
+    with open("Storage.txt", "r") as Storage:
+       storage = Storage.read()
+
+    items = storage.split('#')[:-1]
+    updated_storage = ""
+    
+    for i in items:
+        name, quantity = i.split('&')
+        if name == confirmed_item:
+            name, quantity = i.split('&')
+        else:
+            updated_storage += name + '&' + quantity + '#'
+              
+    with open("Storage.txt", "w") as Storage:
+      Storage.write(updated_storage)
     
     return 1
     
@@ -165,9 +169,9 @@ while True:
             print("Changed item label successfully.")
         else:
             print("There was an error in changing the label. Please try again.")
+    elif response == "Edit -DELETE":
+        response = Delete()
     elif response == "Restart":
        Restart_Storage()
     elif response == 1:
-        print()
-    else:
-        print("Error! You may want to type --H for help.")
+        print("\n")
