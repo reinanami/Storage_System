@@ -23,8 +23,9 @@ def Item_Detector(selected_item, selected_item_length):
 def Check_Alpha(label):
     for i in label:
         if i.isalpha() == False:
-            print("Your label may not contain symbols or numbers.")
-            return 2
+            if i != " ":
+                print("Your label may not contain symbols or numbers.")
+                return 2
 
 def View_Storage():
   with open("Storage.txt", "r") as Storage:
