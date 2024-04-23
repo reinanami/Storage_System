@@ -1,4 +1,4 @@
-def Item_Detector(selected_item, selected_item_length):
+def Item_Detector(selected_item, selected_item_length): 
     with open("Storage.txt", "r") as Storage:
         storage = Storage.read()
         
